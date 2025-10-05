@@ -1,10 +1,10 @@
 
 import NotFound from "@/app/not-found";
-export default async function ProductsDetails({params}: {params: {id: string}}) { 
+export default async function ProductsDetails(context: { params: Promise<Record<string, string>> }) { 
    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
+   const { id } = await context.params;
     // const product = products.find(p => p.id === params.id);
-    const response = await fetch(`${baseUrl}/api/products/${params.id}`)
+    const response = await fetch(`${baseUrl}/api/products/${id}`)
     const product = await response.json()
     if (!product) {
         return <NotFound/>;
