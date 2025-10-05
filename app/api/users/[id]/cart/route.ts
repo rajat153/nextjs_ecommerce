@@ -14,9 +14,11 @@ type Params = {
     id: string;
 }
 
-export async function GET(request: NextRequest, { params }: { params: Params }) {
+export async function GET(request: NextRequest, context: { params: Promise<Record<string, string>> }) {
     const {db} = await connectToDatabase();
-    const userId = params.id;
+    const { id } = await context.params;
+
+    const userId = id;
     const cartProductIds = await db.collection('carts').findOne({userId})
     // const cartProductIds = carts[userId] || [];
     if(!cartProductIds) {
@@ -33,9 +35,11 @@ type AddToCartRequestBody = {
 }
 
 //add to cart
-export async function POST(request: NextRequest, { params }: { params: Params }) {
+export async function POST(request: NextRequest, context: { params: Promise<Record<string, string>> }) {
     const {db} = await connectToDatabase();
-    const userId = params.id;
+      const { id } = await context.params;
+
+    const userId = id;
     const body : AddToCartRequestBody = await request.json();
     const productId = body.productId;
     if(!productId) {
@@ -63,9 +67,10 @@ export async function POST(request: NextRequest, { params }: { params: Params })
 
 
 
-export async function DELETE(request:NextRequest, { params }: { params: Params }) {
+export async function DELETE(request:NextRequest,context: { params: Promise<Record<string, string>> }) {
     const {db} = await connectToDatabase();
-    const userId = params.id;
+     const { id } = await context.params;
+    const userId = id;
     const body : AddToCartRequestBody = await request.json();
     const productId = body.productId;
     if(!productId) {
