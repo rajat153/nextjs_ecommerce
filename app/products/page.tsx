@@ -1,6 +1,6 @@
 
 import ProductsList from "../ProductList";
-
+export const dynamic = 'force-dynamic';
 export default async function ProductsPage() { 
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 

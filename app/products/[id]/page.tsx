@@ -1,5 +1,6 @@
 
 import NotFound from "@/app/not-found";
+export const dynamic = 'force-dynamic';
 export default async function ProductsDetails(context: { params: Promise<Record<string, string>> }) { 
    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
    const { id } = await context.params;
